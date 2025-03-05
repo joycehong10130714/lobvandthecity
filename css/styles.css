@@ -1,4 +1,4 @@
-/* CSS 部分 */
+/* CSS 部分 - 整合響應式設計 */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #f5f5f7;
@@ -6,19 +6,23 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
   margin: 0;
   padding: 0;
+  overflow: hidden; /* 防止滾動 */
 }
 
 .iphone {
   position: relative;
-  width: 330px;   /* iPhone SE 2 的寬度較小 */
-  height: 667px;  /* iPhone SE 2 的高度較小 */
+  width: 90vmin; /* 使用視口的較小維度的90% */
+  height: calc(90vmin * 2.02); /* 保持 iPhone 比例 */
+  max-height: 95vh; /* 確保不超過視口高度的95% */
+  max-width: calc(95vh / 2.02); /* 同樣保持比例 */
   background-color: #000;
-  border-radius: 40px; /* 邊角較小 */
+  border-radius: max(3vmin, 20px); /* 響應式圓角 */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  padding: 10px;
+  padding: min(1vmin, 10px);
   /* 添加頂部和底部黑邊設計 */
   display: flex;
   flex-direction: column;
@@ -29,9 +33,9 @@ body {
   height: 100%; /* 調整高度留出上下黑邊 */
   position: relative;
   overflow: hidden;
-  border-radius: 14px; /* 調整為更合適的圓角 */
+  border-radius: max(1.5vmin, 10px); /* 調整為更合適的圓角 */
   background-color: #000;
-  margin: 40px 0; /* 上下留出黑邊空間 */
+  margin: min(4vmin, 40px) 0; /* 上下留出黑邊空間，響應式 */
 }
 
 /* 背景圖片容器 */
@@ -44,20 +48,20 @@ body {
   background-image: url('https://i.imgur.com/ctiV33T.jpeg');
   background-size: cover;
   background-position: center;
-  border-radius: 14px; /* 與屏幕同樣的圓角 */
+  border-radius: max(1.5vmin, 10px); /* 與屏幕同樣的圓角 */
   z-index: 0;
 }
 
 .home-button {
   position: absolute;
-  bottom: 8px; /* 調整回可見位置 */
+  bottom: min(1.5vmin, 8px); /* 調整回可見位置，響應式 */
   left: 50%;
   transform: translateX(-50%);
-  width: 35px;
-  height: 35px;
+  width: max(4vmin, 25px); /* 響應式大小，不小於25px */
+  height: max(4vmin, 25px);
   background-color: #fff;
   border-radius: 50%;
-  border: 2px solid #999;
+  border: min(0.3vmin, 2px) solid #999;
   z-index: 100; /* 確保在最上層 */
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
@@ -76,7 +80,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: 40px; /* 調整頂部間距 */
+  padding-top: max(4vmin, 30px); /* 調整頂部間距，響應式 */
   box-sizing: border-box;
   position: relative;
   z-index: 1;
@@ -86,7 +90,7 @@ body {
   display: flex;
   width: 100%;
   justify-content: space-around;
-  margin-bottom: 30px; /* 設定上下排的間距 */
+  margin-bottom: max(3vmin, 20px); /* 設定上下排的間距，響應式 */
 }
 
 .app-container {
@@ -94,17 +98,17 @@ body {
   flex-direction: column;
   width: 25%;
   align-items: center;
-  margin-bottom: 10px; /* 減少底部間距 */
+  margin-bottom: min(1.5vmin, 10px); /* 減少底部間距，響應式 */
 }
 
 .app {
-  width: 50px;
-  height: 50px;
-  border-radius: 15px;
+  width: max(6vmin, 40px); /* 響應式大小，不小於40px */
+  height: max(6vmin, 40px);
+  border-radius: max(1.5vmin, 10px);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 10px;
+  font-size: max(1.2vmin, 8px);
   color: white;
   text-align: center;
   background-size: cover;
@@ -113,8 +117,8 @@ body {
 }
 
 .app-name {
-  margin-top: 5px;
-  font-size: 11px;
+  margin-top: min(0.8vmin, 5px);
+  font-size: max(1.5vmin, 10px); /* 響應式字體大小，不小於10px */
   color: white;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
   text-align: center;
@@ -126,26 +130,26 @@ body {
 /* Dock 樣式 */
 .dock {
   position: absolute;
-  bottom: 20px;
+  bottom: max(2vmin, 15px);
   left: 50%;
   transform: translateX(-50%);
-  width: 340px; /* Dock寬度 - 可調整 */
-  height: 60px; /* Dock高度 - 可調整 */
+  width: min(90%, 340px); /* Dock寬度上限340px，但響應小屏幕 */
+  height: max(8vmin, 50px); /* Dock高度響應式 */
   background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
+  border-radius: max(2vmin, 15px);
   backdrop-filter: blur(20px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1;
-  padding: 5px;
+  padding: min(0.8vmin, 5px);
 }
 
 /* Dock中的App樣式 */
 .dock .app {
-  width: 50px; /* Dock中App的寬度 - 可調整 */
-  height: 50px; /* Dock中App的高度 - 可調整 */
-  border-radius: 15px;
+  width: max(6vmin, 40px); /* 響應式大小，不小於40px */
+  height: max(6vmin, 40px);
+  border-radius: max(1.5vmin, 10px);
   background-size: cover;
   background-position: center;
 }
@@ -188,7 +192,7 @@ body {
   background-color: black;
   z-index: -1; /* 一開始藏在背景後方 */
   opacity: 0;
-  border-radius: 14px;
+  border-radius: max(1.5vmin, 10px);
   overflow: hidden;
   transform: scale(0.2); /* 初始縮放比例 */
   transform-origin: 50% 50%; /* 初始變形原點，會在JS中動態改變 */
@@ -199,7 +203,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 14px;
+  border-radius: max(1.5vmin, 10px);
 }
 
 .app-view.active {
@@ -228,50 +232,128 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 20px;
+  height: max(2.5vmin, 15px);
   background-color: transparent;
   display: flex;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding: min(0.8vmin, 5px) min(1.5vmin, 10px);
   z-index: 2;
-  font-size: 12px;
+  font-size: max(1.5vmin, 10px);
   color: white;
-  margin-bottom: 15px;
+  margin-bottom: min(2vmin, 15px);
 }
 
 .status-bar .left {
-  font-size: 11px;
+  font-size: max(1.2vmin, 9px);
   display: flex;
   align-items: center;
 }
 
 .status-bar .time {
   font-weight: bold;
-  font-size: 12px;
+  font-size: max(1.5vmin, 10px);
 }
 
 .status-bar .icons {
   display: flex;
-  font-size: 11px;
+  font-size: max(1.2vmin, 9px);
 }
 
 .status-bar .icons > div {
-  margin-left: 5px;
+  margin-left: min(0.8vmin, 5px);
 }
 
 /* App圖標樣式 */
 #app1  {
   background-color: #1DB954; 
-  background-image: url('https://i.imgur.com/KT1d43r.png')} /* Spotify */
+  background-image: url('https://i.imgur.com/KT1d43r.png');
+} /* Spotify */
+
 #app2 { 
    background-color: #06C755; 
-   background-image: url('https://i.imgur.com/53FsrQR.png')} /* Line */
+   background-image: url('https://i.imgur.com/53FsrQR.png');
+} /* Line */
+
 #app3 { 
-  background-image: url('https://i.imgur.com/z4sDQmO.png')} /* Chrome */
+  background-image: url('https://i.imgur.com/z4sDQmO.png');
+} /* Chrome */
+
 #app4 { 
-  background-image: url('https://i.imgur.com/b4yKBDm.png')} /* X */
+  background-image: url('https://i.imgur.com/b4yKBDm.png');
+} /* X */
+
 #app5 { 
-  background-image: url('https://i.imgur.com/myWMWmw.png')} /* Instagram */
+  background-image: url('https://i.imgur.com/myWMWmw.png');
+} /* Instagram */
+
 #app6 { 
-  background-image: url('https://i.imgur.com/onM0Ibs.png')} /* Google Maps */
-#app7 { background-image: url('https://i.imgur.com/bQ7kBof.png'); } /* 照片 */
+  background-image: url('https://i.imgur.com/onM0Ibs.png');
+} /* Google Maps */
+
+#app7 { 
+  background-image: url('https://i.imgur.com/bQ7kBof.png');
+} /* 照片 */
+
+/* 媒體查詢 - 為不同尺寸的設備調整 */
+@media (max-aspect-ratio: 1/1) {
+  /* 縱向螢幕 - 更窄的設備 */
+  .iphone {
+    width: 85vw;
+    height: calc(85vw * 2.02);
+    max-height: 90vh;
+  }
+}
+
+@media (min-aspect-ratio: 1/1) {
+  /* 橫向螢幕 - 更寬的設備 */
+  .iphone {
+    height: 80vh;
+    width: calc(80vh / 2.02);
+  }
+}
+
+/* 針對特別小的螢幕 */
+@media (max-height: 500px) {
+  .iphone {
+    height: 95vh;
+    width: calc(95vh / 2.02);
+    padding: 0.5vmin;
+  }
+  
+  .screen {
+    margin: 2vmin 0;
+  }
+  
+  .home-button {
+    width: 3.5vmin;
+    height: 3.5vmin;
+    bottom: 0.5vmin;
+  }
+  
+  .row {
+    margin-bottom: 2vmin;
+  }
+  
+  .app {
+    width: 5vmin;
+    height: 5vmin;
+  }
+}
+
+/* 針對特別大的螢幕 */
+@media (min-height: 1000px) and (min-width: 768px) {
+  .iphone {
+    max-width: 400px;
+    max-height: 800px;
+  }
+  
+  .app {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .dock .app {
+    width: 55px;
+    height: 55px;
+  }
+}
