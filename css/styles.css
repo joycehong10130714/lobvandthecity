@@ -14,18 +14,21 @@ body {
 
 .iphone {
   position: relative;
-  width: 90vmin; /* 使用視口的較小維度的90% */
-  height: calc(90vmin * 2.02); /* 修正計算錯誤 - 保持 iPhone 比例 */
-  max-height: 95vh; /* 確保不超過視口高度的95% */
-  max-width: calc(195vh / 2.02); /* 同樣保持比例 */
+  /* 使用固定的寬高比 (1:2.17 是 iPhone SE 的比例) */
+  width: 80vmin;
+  height: calc(80vmin * 2.17);
+  /* 確保在小屏幕上不會太大 */
+  max-height: 90vh;
+  max-width: calc(90vh / 2.17);
   background-color: #000;
-  border-radius: max(4vmin, 25px); /* 增加圓角半徑 */
+  border-radius: max(4vmin, 25px);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  padding: min(4vmin, 12px); /* 增加內邊距 */
-  /* 添加頂部和底部黑邊設計 */
+  padding: min(1.5vmin, 10px);
   display: flex;
   flex-direction: column;
+  /* 確保居中顯示 */
+  margin: 0 auto;
 }
 
 .screen {
@@ -393,5 +396,34 @@ body {
     max-height: 80vh;
     max-height: calc(var(--vh, 1vh) * 80);
     margin-bottom: 50px;
+  }
+}
+
+/* 媒體查詢 - 保持比例但調整大小 */
+@media (max-width: 767px) {
+  .iphone {
+    /* 在小屏幕上稍微縮小 */
+    width: 85vmin;
+    height: calc(85vmin * 2.17);
+    /* 確保整個模擬器能在屏幕中顯示 */
+    transform: scale(0.95);
+    margin-bottom: 30px;
+  }
+}
+
+/* 在極小屏幕上更小 */
+@media (max-height: 500px) {
+  .iphone {
+    width: 70vmin;
+    height: calc(70vmin * 2.17);
+  }
+}
+
+/* 在大屏幕上限制最大尺寸 */
+@media (min-height: 1000px) and (min-width: 768px) {
+  .iphone {
+    /* 設定一個最大尺寸，防止過大 */
+    max-width: 380px;
+    max-height: 824px; /* 380 * 2.17 */
   }
 }
