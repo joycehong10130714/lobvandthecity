@@ -2,11 +2,25 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>博年的iPhone SE</title>
     <!-- 連接CSS文件 -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
+ 
+  <script>
+  // 解決 Safari 視口高度問題
+  function updateVH() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  
+  // 初始化和視窗大小變化時更新
+  updateVH();
+  window.addEventListener('resize', updateVH);
+  window.addEventListener('orientationchange', updateVH);
+</script>
+  
 <body>
 
     <div class="iphone">
@@ -116,5 +130,19 @@
 
     <!-- 連接JavaScript文件 -->
     <script src="js/script.js"></script>
+  
+      <script>
+      // 解決 Safari 視口高度問題
+      function updateVH() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      }
+
+      // 初始化和視窗大小變化時更新
+      updateVH();
+      window.addEventListener('resize', updateVH);
+      window.addEventListener('orientationchange', updateVH);
+    </script>
+  
 </body>
 </html>
