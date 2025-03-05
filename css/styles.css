@@ -15,14 +15,14 @@ body {
 .iphone {
   position: relative;
   width: 90vmin; /* 使用視口的較小維度的90% */
-  height: calc(90vmin * 2.02); /* 保持 iPhone 比例 */
+  height: calc(90vmin * 2.02); /* 修正計算錯誤 - 保持 iPhone 比例 */
   max-height: 95vh; /* 確保不超過視口高度的95% */
-  max-width: calc(95vh / 2.02); /* 同樣保持比例 */
+  max-width: calc(195vh / 2.02); /* 同樣保持比例 */
   background-color: #000;
-  border-radius: max(3vmin, 20px); /* 響應式圓角 */
+  border-radius: max(4vmin, 25px); /* 增加圓角半徑 */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  padding: min(1vmin, 10px);
+  padding: min(4vmin, 12px); /* 增加內邊距 */
   /* 添加頂部和底部黑邊設計 */
   display: flex;
   flex-direction: column;
@@ -33,7 +33,7 @@ body {
   height: 100%; /* 調整高度留出上下黑邊 */
   position: relative;
   overflow: hidden;
-  border-radius: max(1.5vmin, 10px); /* 調整為更合適的圓角 */
+  border-radius: max(2.5vmin, 14px); /* 增加圓角半徑 */
   background-color: #000;
   margin: min(4vmin, 40px) 0; /* 上下留出黑邊空間，響應式 */
 }
@@ -48,17 +48,17 @@ body {
   background-image: url('https://i.imgur.com/ctiV33T.jpeg');
   background-size: cover;
   background-position: center;
-  border-radius: max(1.5vmin, 10px); /* 與屏幕同樣的圓角 */
+  border-radius: max(2.5vmin, 14px); /* 與screen一致的圓角 */
   z-index: 0;
 }
 
 .home-button {
   position: absolute;
-  bottom: min(1.5vmin, 8px); /* 調整回可見位置，響應式 */
+  bottom: min(1.5vmin, 6px); /* 調整回可見位置，響應式 */
   left: 50%;
   transform: translateX(-50%);
-  width: max(4vmin, 25px); /* 響應式大小，不小於25px */
-  height: max(4vmin, 25px);
+  width: max(4vmin, 20px); /* 響應式大小，不小於25px */
+  height: max(4vmin, 20px);
   background-color: #fff;
   border-radius: 50%;
   border: min(0.3vmin, 2px) solid #999;
@@ -355,5 +355,43 @@ body {
   .dock .app {
     width: 55px;
     height: 55px;
+  }
+}
+
+/* Safari 導航欄適配修復 */
+:root {
+  --vh: 1vh;
+}
+
+body {
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+
+/* 修改 iPhone 容器適應 Safari */
+@media screen and (max-width: 767px) {
+  body {
+    align-items: flex-start;
+    padding-top: 10px;
+  }
+  
+  .iphone {
+    max-height: 85vh;
+    max-height: calc(var(--vh, 1vh) * 85);
+    margin-bottom: 30px;
+    transform: scale(0.95);
+  }
+}
+
+/* iOS Safari 特定修復 */
+@supports (-webkit-touch-callout: none) {
+  .iphone {
+    max-height: 80vh;
+    max-height: calc(var(--vh, 1vh) * 80);
+    margin-bottom: 50px;
   }
 }
