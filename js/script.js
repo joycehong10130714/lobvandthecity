@@ -111,3 +111,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // 每分鐘更新一次時間
   setInterval(updateTime, 60000);
 });
+
+// 監聽視窗調整事件
+window.addEventListener('resize', function() {
+  // 重新計算動畫相關的尺寸等
+  // 如果有必要，你可以在這裡添加代碼
+});
