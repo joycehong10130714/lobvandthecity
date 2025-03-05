@@ -12,7 +12,7 @@ body {
 
 .iphone {
   position: relative;
-  width: 375px;   /* iPhone SE 2 的寬度較小 */
+  width: 330px;   /* iPhone SE 2 的寬度較小 */
   height: 667px;  /* iPhone SE 2 的高度較小 */
   background-color: #000;
   border-radius: 40px; /* 邊角較小 */
