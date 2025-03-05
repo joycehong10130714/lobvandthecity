@@ -1,4 +1,4 @@
-// JavaScript部分 - 處理Dock App連結的點擊和阻止模擬器行為
+// JavaScript部分 - 實現iPhone風格的App打開動畫和整體縮放
 document.addEventListener('DOMContentLoaded', function() {
   // 點擊App開啟對應視圖，帶有從App圖標放大的動畫
   document.querySelectorAll('.app:not(.app-link .app)').forEach(app => {
@@ -32,69 +32,76 @@ document.addEventListener('DOMContentLoaded', function() {
   const appLink = document.querySelector('.app-link');
   if (appLink) {
     const dockApp = appLink.querySelector('.app');
-    const dockAppId = dockApp.id;
+    const dockAppId = dockApp ? dockApp.id : null;
     
     // 完全阻止模擬器事件
-    dockApp.addEventListener('click', function(event) {
-      // 阻止事件傳播，但不阻止默認行為(允許連結跳轉)
-      event.stopPropagation();
-      
-      // 確保不顯示對應的App視圖
-      const appView = document.getElementById(`${dockAppId}-view`);
-      if (appView) {
-        // 確保App視圖不會顯示
-        setTimeout(() => {
-          appView.classList.remove('active');
-        }, 10);
-      }
-    });
+    if (dockApp) {
+      dockApp.addEventListener('click', function(event) {
+        // 阻止事件傳播，但不阻止默認行為(允許連結跳轉)
+        event.stopPropagation();
+        
+        // 確保不顯示對應的App視圖
+        const appView = document.getElementById(`${dockAppId}-view`);
+        if (appView) {
+          // 確保App視圖不會顯示
+          setTimeout(() => {
+            appView.classList.remove('active');
+          }, 10);
+        }
+      });
+    }
   }
 
   // 點擊Home按鈕返回主屏幕
-  document.querySelector('.home-button').addEventListener('click', function() {
-    const screen = document.querySelector('.screen');
-    const activeApp = document.querySelector('.app-view.active');
-    
-    if (activeApp) {
-      // 移除active類以關閉App
-      activeApp.classList.remove('active');
-      
-      // 移除app-open類恢復背景亮度和其他元素
-      screen.classList.remove('app-open');
-    }
-    
-    // 添加按下動畫
-    this.classList.add('pressed');
-    setTimeout(() => {
-      this.classList.remove('pressed');
-    }, 150);
-  });
-
-  // 為Home按鈕添加點擊效果
   const homeButton = document.querySelector('.home-button');
-  homeButton.addEventListener('mousedown', function() {
-    this.style.backgroundColor = '#eee';
-  });
+  if (homeButton) {
+    homeButton.addEventListener('click', function() {
+      const screen = document.querySelector('.screen');
+      const activeApp = document.querySelector('.app-view.active');
+      
+      if (activeApp) {
+        // 移除active類以關閉App
+        activeApp.classList.remove('active');
+        
+        // 移除app-open類恢復背景亮度和其他元素
+        if (screen) screen.classList.remove('app-open');
+      }
+      
+      // 添加按下動畫
+      this.classList.add('pressed');
+      setTimeout(() => {
+        this.classList.remove('pressed');
+      }, 150);
+    });
 
-  homeButton.addEventListener('mouseup', function() {
-    this.style.backgroundColor = '#fff';
-  });
+    // 為Home按鈕添加點擊效果
+    homeButton.addEventListener('mousedown', function() {
+      this.style.backgroundColor = '#eee';
+    });
 
-  homeButton.addEventListener('mouseleave', function() {
-    this.style.backgroundColor = '#fff';
-  });
+    homeButton.addEventListener('mouseup', function() {
+      this.style.backgroundColor = '#ooo';
+    });
 
-  // 添加觸控效果
-  homeButton.addEventListener('touchstart', function() {
-    this.style.backgroundColor = '#eee';
-  });
+    homeButton.addEventListener('mouseleave', function() {
+      this.style.backgroundColor = '#fff';
+    });
 
-  homeButton.addEventListener('touchend', function() {
-    this.style.backgroundColor = '#fff';
-  });
+    // 添加觸控效果
+    homeButton.addEventListener('touchstart', function() {
+      this.style.backgroundColor = '#eee';
+    });
+
+    homeButton.addEventListener('touchend', function() {
+      this.style.backgroundColor = '#fff';
+    });
+  }
 
   // 設置正確的時間(僅示範)
   function updateTime() {
+    const timeElement = document.querySelector('.time');
+    if (!timeElement) return;
+    
     const now = new Date();
     let hours = now.getHours();
     const minutes = now.getMinutes().toString().padStart(2, '0');
@@ -103,28 +110,38 @@ document.addEventListener('DOMContentLoaded', function() {
     hours = hours % 12;
     hours = hours ? hours : 12; // 0 應該顯示為 12
     
-    document.querySelector('.time').textContent = `${ampm} ${hours}:${minutes}`;
+    timeElement.textContent = `${ampm} ${hours}:${minutes}`;
   }
 
   // 更新時間
   updateTime();
   // 每分鐘更新一次時間
   setInterval(updateTime, 60000);
+  
+  // 處理整體縮放的函數
+  function updateScale() {
+    const iphone = document.querySelector('.iphone');
+    if (!iphone) return;
+    
+    const viewportHeight = window.innerHeight;
+    const viewportWidth = window.innerWidth;
+    const iphoneHeight = 715; // 原始高度
+    const iphoneWidth = 330; // 原始寬度
+    
+    // 計算縮放因子 - 選擇較小的值確保完全顯示
+    let scaleFactor = Math.min(
+      (viewportHeight * 0.9) / iphoneHeight,
+      (viewportWidth * 0.9) / iphoneWidth
+    );
+    
+    // 限制最大和最小縮放
+    scaleFactor = Math.min(Math.max(scaleFactor, 0.5), 1.2);
+    
+    // 應用縮放
+    document.documentElement.style.setProperty('--scale-factor', scaleFactor);
+  }
+
+  // 初始化和窗口調整時更新縮放
+  updateScale();
+  window.addEventListener('resize', updateScale);
 });
-
-// 監聽視窗調整事件
-window.addEventListener('resize', function() {
-  // 重新計算動畫相關的尺寸等
-  // 如果有必要，你可以在這裡添加代碼
-});
-
-// 解決 Safari 視口高度問題
-function updateVH() {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
-
-// 初始化和視窗大小變化時更新
-updateVH();
-window.addEventListener('resize', updateVH);
-window.addEventListener('orientationchange', updateVH);
