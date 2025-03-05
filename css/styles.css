@@ -1,4 +1,4 @@
-/* CSS 部分 - 整合響應式設計 */
+/* CSS 部分 - 完整版本 */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #f5f5f7;
@@ -9,63 +9,54 @@ body {
   width: 100vw;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* 防止滾動 */
+  overflow: hidden;
 }
 
+/* iPhone模擬器外殼設定 */
 .iphone {
   position: relative;
-  /* 使用固定的寬高比 (1:2.17 是 iPhone SE 的比例) */
-  width: 80vmin;
-  height: calc(80vmin * 2.17);
-  /* 確保在小屏幕上不會太大 */
-  max-height: 90vh;
-  max-width: calc(90vh / 2.17);
+  /* 使用固定比例，但根據螢幕調整大小 */
+  width: min(80vmin, 350px);
+  height: min(calc(80vmin * 2), 700px);
+  /* 固定最大/最小尺寸 */
+  max-width: 350px;
+  max-height: 700px;
+  min-width: 280px;
+  min-height: 560px;
   background-color: #000;
-  border-radius: max(4vmin, 25px);
+  border-radius: 40px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  padding: min(1.5vmin, 10px);
+  padding: 0;
   display: flex;
   flex-direction: column;
-  /* 確保居中顯示 */
-  margin: 0 auto;
+  /* 確保整體居中 */
+  margin: auto;
 }
 
+/* 螢幕區域設定 */
 .screen {
-  width: 100%;
-  height: 100%; /* 調整高度留出上下黑邊 */
   position: relative;
+  width: calc(100% - 20px);
+  height: calc(100% - 80px);
+  margin: 40px 10px;
+  border-radius: 25px;
   overflow: hidden;
-  border-radius: max(2.5vmin, 14px); /* 增加圓角半徑 */
   background-color: #000;
-  margin: min(4vmin, 40px) 0; /* 上下留出黑邊空間，響應式 */
 }
 
-/* 背景圖片容器 */
-.screen-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('https://i.imgur.com/ctiV33T.jpeg');
-  background-size: cover;
-  background-position: center;
-  border-radius: max(2.5vmin, 14px); /* 與screen一致的圓角 */
-  z-index: 0;
-}
-
+/* Home按鈕設定 */
 .home-button {
   position: absolute;
-  bottom: min(1.5vmin, 6px); /* 調整回可見位置，響應式 */
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  width: max(4vmin, 20px); /* 響應式大小，不小於25px */
-  height: max(4vmin, 20px);
+  width: 40px;
+  height: 40px;
   background-color: #fff;
   border-radius: 50%;
-  border: min(0.3vmin, 2px) solid #999;
-  z-index: 100; /* 確保在最上層 */
+  border: 1px solid #999;
+  z-index: 100;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
@@ -77,13 +68,27 @@ body {
   transition: transform 0.1s, background-color 0.1s;
 }
 
+/* 背景圖片容器 */
+.screen-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://i.imgur.com/ctiV33T.jpeg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 25px;
+  z-index: 0;
+}
+
 .home-screen {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: max(4vmin, 30px); /* 調整頂部間距，響應式 */
+  padding-top: 40px;
   box-sizing: border-box;
   position: relative;
   z-index: 1;
@@ -93,7 +98,7 @@ body {
   display: flex;
   width: 100%;
   justify-content: space-around;
-  margin-bottom: max(3vmin, 20px); /* 設定上下排的間距，響應式 */
+  margin-bottom: 30px;
 }
 
 .app-container {
@@ -101,17 +106,17 @@ body {
   flex-direction: column;
   width: 25%;
   align-items: center;
-  margin-bottom: min(1.5vmin, 10px); /* 減少底部間距，響應式 */
+  margin-bottom: 10px;
 }
 
 .app {
-  width: max(6vmin, 40px); /* 響應式大小，不小於40px */
-  height: max(6vmin, 40px);
-  border-radius: max(1.5vmin, 10px);
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: max(1.2vmin, 8px);
+  font-size: 10px;
   color: white;
   text-align: center;
   background-size: cover;
@@ -120,8 +125,8 @@ body {
 }
 
 .app-name {
-  margin-top: min(0.8vmin, 5px);
-  font-size: max(1.5vmin, 10px); /* 響應式字體大小，不小於10px */
+  margin-top: 5px;
+  font-size: 11px;
   color: white;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
   text-align: center;
@@ -133,26 +138,26 @@ body {
 /* Dock 樣式 */
 .dock {
   position: absolute;
-  bottom: max(2vmin, 15px);
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: min(90%, 340px); /* Dock寬度上限340px，但響應小屏幕 */
-  height: max(8vmin, 50px); /* Dock高度響應式 */
+  width: 80px;
+  height: 80px;
   background-color: rgba(255, 255, 255, 0.2);
-  border-radius: max(2vmin, 15px);
+  border-radius: 20px;
   backdrop-filter: blur(20px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1;
-  padding: min(0.8vmin, 5px);
+  padding: 5px;
 }
 
 /* Dock中的App樣式 */
 .dock .app {
-  width: max(6vmin, 40px); /* 響應式大小，不小於40px */
-  height: max(6vmin, 40px);
-  border-radius: max(1.5vmin, 10px);
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
   background-size: cover;
   background-position: center;
 }
@@ -169,7 +174,7 @@ body {
   display: block;
   position: relative;
   cursor: pointer;
-  z-index: 15; /* 確保連結在上層，可以被點擊 */
+  z-index: 15;
 }
 
 /* 當滑鼠懸停在連結上時的效果 */
@@ -193,12 +198,12 @@ body {
   width: 100%;
   height: 100%;
   background-color: black;
-  z-index: -1; /* 一開始藏在背景後方 */
+  z-index: -1;
   opacity: 0;
-  border-radius: max(1.5vmin, 10px);
+  border-radius: 25px;
   overflow: hidden;
-  transform: scale(0.2); /* 初始縮放比例 */
-  transform-origin: 50% 50%; /* 初始變形原點，會在JS中動態改變 */
+  transform: scale(0.2);
+  transform-origin: 50% 50%;
   transition: transform 0.3s ease, opacity 0.3s ease, z-index 0s 0.3s;
 }
 
@@ -206,7 +211,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: max(1.5vmin, 10px);
+  border-radius: 25px;
 }
 
 .app-view.active {
@@ -235,46 +240,46 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: max(2.5vmin, 15px);
+  height: 20px;
   background-color: transparent;
   display: flex;
   justify-content: space-between;
-  padding: min(0.8vmin, 5px) min(1.5vmin, 10px);
+  padding: 5px 10px;
   z-index: 2;
-  font-size: max(1.5vmin, 10px);
+  font-size: 12px;
   color: white;
-  margin-bottom: min(2vmin, 15px);
+  margin-bottom: 15px;
 }
 
 .status-bar .left {
-  font-size: max(1.2vmin, 9px);
+  font-size: 11px;
   display: flex;
   align-items: center;
 }
 
 .status-bar .time {
   font-weight: bold;
-  font-size: max(1.5vmin, 10px);
+  font-size: 12px;
 }
 
 .status-bar .icons {
   display: flex;
-  font-size: max(1.2vmin, 9px);
+  font-size: 11px;
 }
 
 .status-bar .icons > div {
-  margin-left: min(0.8vmin, 5px);
+  margin-left: 5px;
 }
 
 /* App圖標樣式 */
-#app1  {
+#app1 {
   background-color: #1DB954; 
   background-image: url('https://i.imgur.com/KT1d43r.png');
 } /* Spotify */
 
 #app2 { 
-   background-color: #06C755; 
-   background-image: url('https://i.imgur.com/53FsrQR.png');
+  background-color: #06C755; 
+  background-image: url('https://i.imgur.com/53FsrQR.png');
 } /* Line */
 
 #app3 { 
@@ -297,67 +302,47 @@ body {
   background-image: url('https://i.imgur.com/bQ7kBof.png');
 } /* 照片 */
 
-/* 媒體查詢 - 為不同尺寸的設備調整 */
-@media (max-aspect-ratio: 1/1) {
-  /* 縱向螢幕 - 更窄的設備 */
+/* 特殊設備調整 */
+@media (max-width: 380px), (max-height: 700px) {
   .iphone {
-    width: 85vw;
-    height: calc(85vw * 2.02);
-    max-height: 90vh;
-  }
-}
-
-@media (min-aspect-ratio: 1/1) {
-  /* 橫向螢幕 - 更寬的設備 */
-  .iphone {
-    height: 80vh;
-    width: calc(80vh / 2.02);
-  }
-}
-
-/* 針對特別小的螢幕 */
-@media (max-height: 500px) {
-  .iphone {
-    height: 95vh;
-    width: calc(95vh / 2.02);
-    padding: 0.5vmin;
+    /* 更小的設備使用更小的固定尺寸 */
+    width: min(90vmin, 300px);
+    height: min(calc(90vmin * 2), 600px);
+    border-radius: 35px;
   }
   
   .screen {
-    margin: 2vmin 0;
+    margin: 35px 10px;
+    border-radius: 20px;
+  }
+  
+  .screen-background, .app-view, .app-view img {
+    border-radius: 20px;
   }
   
   .home-button {
-    width: 3.5vmin;
-    height: 3.5vmin;
-    bottom: 0.5vmin;
-  }
-  
-  .row {
-    margin-bottom: 2vmin;
+    width: 35px;
+    height: 35px;
   }
   
   .app {
-    width: 5vmin;
-    height: 5vmin;
-  }
-}
-
-/* 針對特別大的螢幕 */
-@media (min-height: 1000px) and (min-width: 768px) {
-  .iphone {
-    max-width: 400px;
-    max-height: 800px;
-  }
-  
-  .app {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
   }
   
   .dock .app {
-    width: 55px;
-    height: 55px;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/* 確保在iOS Safari上正確顯示 */
+@supports (-webkit-touch-callout: none) {
+  .iphone {
+    position: relative;
+    height: min(calc(80vmin * 2), 700px);
+    max-height: min(calc(90vh - 80px), 700px);
+    margin-bottom: 40px;
   }
 }
 
@@ -366,64 +351,12 @@ body {
   --vh: 1vh;
 }
 
-body {
-  min-height: 100vh;
-  min-height: calc(var(--vh, 1vh) * 100);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-}
-
-/* 修改 iPhone 容器適應 Safari */
 @media screen and (max-width: 767px) {
   body {
-    align-items: flex-start;
     padding-top: 10px;
   }
   
   .iphone {
-    max-height: 85vh;
-    max-height: calc(var(--vh, 1vh) * 85);
     margin-bottom: 30px;
-    transform: scale(0.95);
-  }
-}
-
-/* iOS Safari 特定修復 */
-@supports (-webkit-touch-callout: none) {
-  .iphone {
-    max-height: 80vh;
-    max-height: calc(var(--vh, 1vh) * 80);
-    margin-bottom: 50px;
-  }
-}
-
-/* 媒體查詢 - 保持比例但調整大小 */
-@media (max-width: 767px) {
-  .iphone {
-    /* 在小屏幕上稍微縮小 */
-    width: 85vmin;
-    height: calc(85vmin * 2.17);
-    /* 確保整個模擬器能在屏幕中顯示 */
-    transform: scale(0.95);
-    margin-bottom: 30px;
-  }
-}
-
-/* 在極小屏幕上更小 */
-@media (max-height: 500px) {
-  .iphone {
-    width: 70vmin;
-    height: calc(70vmin * 2.17);
-  }
-}
-
-/* 在大屏幕上限制最大尺寸 */
-@media (min-height: 1000px) and (min-width: 768px) {
-  .iphone {
-    /* 設定一個最大尺寸，防止過大 */
-    max-width: 380px;
-    max-height: 824px; /* 380 * 2.17 */
   }
 }
