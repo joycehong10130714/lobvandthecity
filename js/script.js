@@ -117,3 +117,14 @@ window.addEventListener('resize', function() {
   // 重新計算動畫相關的尺寸等
   // 如果有必要，你可以在這裡添加代碼
 });
+
+// 解決 Safari 視口高度問題
+function updateVH() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+// 初始化和視窗大小變化時更新
+updateVH();
+window.addEventListener('resize', updateVH);
+window.addEventListener('orientationchange', updateVH);
