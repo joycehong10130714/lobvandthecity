@@ -1,4 +1,4 @@
-/* CSS 部分 - 完整版本 */
+/* CSS 部分 - 簡化版本 */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #f5f5f7;
@@ -12,59 +12,80 @@ body {
   overflow: hidden;
 }
 
-/* iPhone模擬器外殼設定 */
+/* iPhone模擬器外殼設定 - 固定尺寸與比例 */
 .iphone {
   position: relative;
-  /* 使用固定比例，但根據螢幕調整大小 */
-  width: min(80vmin, 350px);
-  height: min(calc(80vmin * 2), 700px);
-  /* 固定最大/最小尺寸 */
-  max-width: 350px;
-  max-height: 700px;
-  min-width: 280px;
-  min-height: 560px;
+  width: 330px; /* 固定寬度 */
+  height: 675px; /* 固定高度 */
   background-color: #000;
-  border-radius: 40px;
+  border-radius: 32px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  /* 確保整體居中 */
-  margin: auto;
+  margin: 0 auto;
+  /* 唯一的響應式 - 根據螢幕大小縮放整個模擬器 */
+  transform: scale(var(--scale-factor, 1));
+  transform-origin: center center;
 }
 
 /* 螢幕區域設定 */
 .screen {
   position: relative;
-  width: calc(100% - 20px);
-  height: calc(100% - 80px);
-  margin: 40px 10px;
-  border-radius: 25px;
+  width: calc(100% - 24px);
+  height: calc(100% - 130px);
+  margin: 65px 12px 65px 12px;
+  border-radius: 5px;
   overflow: hidden;
   background-color: #000;
+}
+
+/* 頂部揚聲器 */
+.iphone::before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 5px;
+  background-color: #888;
+  border-radius: 2px;
+  z-index: 3;
 }
 
 /* Home按鈕設定 */
 .home-button {
   position: absolute;
-  bottom: 10px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
-  background-color: #fff;
+  width: 38px;
+  height: 38px;
+  background-color: #000 !important;
   border-radius: 50%;
-  border: 1px solid #999;
-  z-index: 100;
+  border: 1px solid #888;
+  z-index: 10;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Home按鈕內部方形 */
+.home-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border: 1px solid #aaa;
+  border-radius: 2px;
 }
 
 /* Home按鈕按下效果 */
 .home-button.pressed {
   transform: translateX(-50%) scale(0.95);
-  background-color: #ddd;
+  background-color: #eee;
   transition: transform 0.1s, background-color 0.1s;
 }
 
@@ -78,7 +99,7 @@ body {
   background-image: url('https://i.imgur.com/ctiV33T.jpeg');
   background-size: cover;
   background-position: center;
-  border-radius: 25px;
+  border-radius: 5px;
   z-index: 0;
 }
 
@@ -88,7 +109,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: 40px;
+  padding-top: 35px;
   box-sizing: border-box;
   position: relative;
   z-index: 1;
@@ -98,7 +119,7 @@ body {
   display: flex;
   width: 100%;
   justify-content: space-around;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 .app-container {
@@ -110,9 +131,9 @@ body {
 }
 
 .app {
-  width: 50px;
-  height: 50px;
-  border-radius: 15px;
+  width: 55px;
+  height: 55px;
+  border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,7 +146,7 @@ body {
 }
 
 .app-name {
-  margin-top: 5px;
+  margin-top: 6px;
   font-size: 11px;
   color: white;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
@@ -141,8 +162,8 @@ body {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 80px;
+  width: 280px;
+  height: 60px;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   backdrop-filter: blur(20px);
@@ -155,9 +176,9 @@ body {
 
 /* Dock中的App樣式 */
 .dock .app {
-  width: 50px;
-  height: 50px;
-  border-radius: 15px;
+  width: 55px;
+  height: 55px;
+  border-radius: 12px;
   background-size: cover;
   background-position: center;
 }
@@ -200,7 +221,7 @@ body {
   background-color: black;
   z-index: -1;
   opacity: 0;
-  border-radius: 25px;
+  border-radius: 5px;
   overflow: hidden;
   transform: scale(0.2);
   transform-origin: 50% 50%;
@@ -211,7 +232,8 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 25px;
+  border-radius: 5px;
+  background-color: #000;
 }
 
 .app-view.active {
@@ -248,7 +270,6 @@ body {
   z-index: 2;
   font-size: 12px;
   color: white;
-  margin-bottom: 15px;
 }
 
 .status-bar .left {
@@ -302,61 +323,4 @@ body {
   background-image: url('https://i.imgur.com/bQ7kBof.png');
 } /* 照片 */
 
-/* 特殊設備調整 */
-@media (max-width: 380px), (max-height: 700px) {
-  .iphone {
-    /* 更小的設備使用更小的固定尺寸 */
-    width: min(90vmin, 300px);
-    height: min(calc(90vmin * 2), 600px);
-    border-radius: 35px;
-  }
-  
-  .screen {
-    margin: 35px 10px;
-    border-radius: 20px;
-  }
-  
-  .screen-background, .app-view, .app-view img {
-    border-radius: 20px;
-  }
-  
-  .home-button {
-    width: 35px;
-    height: 35px;
-  }
-  
-  .app {
-    width: 45px;
-    height: 45px;
-  }
-  
-  .dock .app {
-    width: 45px;
-    height: 45px;
-  }
-}
-
-/* 確保在iOS Safari上正確顯示 */
-@supports (-webkit-touch-callout: none) {
-  .iphone {
-    position: relative;
-    height: min(calc(80vmin * 2), 700px);
-    max-height: min(calc(90vh - 80px), 700px);
-    margin-bottom: 40px;
-  }
-}
-
-/* Safari 導航欄適配修復 */
-:root {
-  --vh: 1vh;
-}
-
-@media screen and (max-width: 767px) {
-  body {
-    padding-top: 10px;
-  }
-  
-  .iphone {
-    margin-bottom: 30px;
-  }
-}
+#app8 { background-color: transparent; } /* 空白 */
