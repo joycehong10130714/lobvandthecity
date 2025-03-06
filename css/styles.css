@@ -1,7 +1,11 @@
 /* CSS 部分 - 簡化版本 */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #f5f5f7;
+  background-image: url('https://i.imgur.com/DG6dLOY.jpeg');
+  background-size: cover; /* 確保背景圖片覆蓋整個區域 */
+  background-position: center center; /* 圖片水平和垂直居中 */
+  background-repeat: no-repeat; /* 防止圖片重複 */
+  background-attachment: fixed; /* 固定背景，滾動時不動 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,6 +14,64 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 40%);
+  pointer-events: none; /* 確保不會影響點擊 */
+  z-index: 0; /* 確保在背景之上，但在其他元素之下 */
+}
+
+.lock-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 20; /* 確保它在所有內容之上，但不超出螢幕區域 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s ease;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.lock-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.lock-screen.unlocked {
+  transform: translateY(-100%);
+}
+
+.swipe-hint {
+  position: absolute;
+  bottom: 30px;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+  opacity: 0.8;
+  animation: pulse 2s infinite;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
 }
 
 /* iPhone模擬器外殼設定 - 固定尺寸與比例 */
@@ -96,7 +158,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('https://i.imgur.com/ctiV33T.jpeg');
+  background-image: url('https://i.imgur.com/BobTJfP.jpeg');
   background-size: cover;
   background-position: center;
   border-radius: 5px;
@@ -324,3 +386,86 @@ body {
 } /* 照片 */
 
 #app8 { background-color: transparent; } /* 空白 */
+
+/* 針對手機豎屏方向優化 */
+@media (max-width: 767px) and (orientation: portrait) {
+  body {
+    background-position: center top; /* 背景圖頂部對齊 */
+  }
+}
+
+/* 針對手機橫屏方向優化 */
+@media (max-width: 896px) and (orientation: landscape) {
+  body {
+    background-position: center center; /* 背景圖居中 */
+  }
+}
+
+/* 鎖定畫面時間樣式 */
+.lock-screen-time {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  z-index: 21;
+}
+
+.lock-date {
+  font-size: 14px;
+  margin-bottom: 5px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}
+
+.lock-clock {
+  font-size: 70px;
+  font-weight: 200;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+/* 鎖定畫面通知樣式 */
+.lock-notification {
+  position: absolute;
+  bottom: 230px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  background-color: rgba(150, 150, 150, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  z-index: 21;
+}
+
+.notification-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.notification-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-time {
+  font-size: 12px;
+  color: white;
+  text-align: right;
+}
+
+.notification-text {
+  font-size: 14px;
+  color: white;
+}
