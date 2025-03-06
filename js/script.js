@@ -145,3 +145,58 @@ document.addEventListener('DOMContentLoaded', function() {
   updateScale();
   window.addEventListener('resize', updateScale);
 });
+
+// 解鎖畫面功能
+document.addEventListener('DOMContentLoaded', function() {
+  const lockScreen = document.querySelector('.lock-screen');
+  
+  if (lockScreen) {
+    // 點擊或觸摸任何地方解鎖
+    lockScreen.addEventListener('click', unlockPhone);
+    lockScreen.addEventListener('touchend', unlockPhone);
+    
+    // 向上滑動解鎖
+    let startY;
+    
+    lockScreen.addEventListener('touchstart', function(e) {
+      startY = e.touches[0].clientY;
+    });
+    
+    lockScreen.addEventListener('touchmove', function(e) {
+      if (!startY) return;
+      
+      const moveY = e.touches[0].clientY;
+      const diff = startY - moveY;
+      
+      // 如果向上滑動超過50px，則解鎖
+      if (diff > 50) {
+        unlockPhone();
+        startY = null;
+      }
+    });
+    
+    function unlockPhone() {
+      lockScreen.classList.add('unlocked');
+      // 播放解鎖聲音（可選）
+      // const unlockSound = new Audio('unlock-sound.mp3');
+      // unlockSound.play();
+    }
+  }
+});
+
+// 更新鎖定畫面時間
+function updateLockScreenTime() {
+  const lockClock = document.querySelector('.lock-clock');
+  if (!lockClock) return;
+  
+  const now = new Date();
+  let hours = now.getHours();
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  
+  // 24小時制
+  lockClock.textContent = `${hours}:${minutes}`;
+}
+
+// 初始化時更新時間，然後每分鐘更新一次
+updateLockScreenTime();
+setInterval(updateLockScreenTime, 60000);
